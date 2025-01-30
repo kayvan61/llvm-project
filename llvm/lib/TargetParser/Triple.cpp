@@ -25,6 +25,7 @@ StringRef Triple::getArchTypeName(ArchType Kind) {
   switch (Kind) {
   case UnknownArch:    return "unknown";
 
+  case KayvanToyISA:    return "KTISA";
   case aarch64:        return "aarch64";
   case aarch64_32:     return "aarch64_32";
   case aarch64_be:     return "aarch64_be";
@@ -973,6 +974,7 @@ static Triple::ObjectFormatType getDefaultFormat(const Triple &T) {
   case Triple::ve:
   case Triple::xcore:
   case Triple::xtensa:
+  case Triple::KayvanToyISA:
     return Triple::ELF;
 
   case Triple::mipsel:
@@ -1643,6 +1645,9 @@ unsigned Triple::getArchPointerBitWidth(llvm::Triple::ArchType Arch) {
   case llvm::Triple::UnknownArch:
     return 0;
 
+  case llvm::Triple::KayvanToyISA:
+    return 32;
+
   case llvm::Triple::avr:
   case llvm::Triple::msp430:
     return 16;
@@ -1791,6 +1796,7 @@ Triple Triple::get32BitArchVariant() const {
   case Triple::x86:
   case Triple::xcore:
   case Triple::xtensa:
+  case Triple::KayvanToyISA:
     // Already 32-bit.
     break;
 
@@ -1842,6 +1848,7 @@ Triple Triple::get64BitArchVariant() const {
   case Triple::tcele:
   case Triple::xcore:
   case Triple::xtensa:
+  case Triple::KayvanToyISA:
     T.setArch(UnknownArch);
     break;
 
